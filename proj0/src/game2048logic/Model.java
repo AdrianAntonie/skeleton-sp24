@@ -166,9 +166,11 @@ public class Model {
             }
             else if ((currBoard.tile(x, (i + 1)).value() == currTile.value()) && (i + 2 < currBoard.size()) && (currBoard.tile(x, (i + 1)).value() != currBoard.tile(x, (i + 2)).value()) && !currBoard.tile(x, (i + 1)).wasMerged()) {
                 targetY++;
+                score += myValue * 2;
             }
-            else if((i + 2 == currBoard.size()) && (currBoard.tile(x, (i + 1)).value() == currTile.value())){
+            else if((i + 2 == currBoard.size()) && (currBoard.tile(x, (i + 1)).value() == currTile.value()) && !currBoard.tile(x, (i + 1)).wasMerged()){
                 targetY++;
+                score += myValue * 2;
             }
         }
         if(y != targetY) {
@@ -194,9 +196,11 @@ public class Model {
     public void tilt(Side side) {
         // TODO: Tasks 8 and 9. Fill in this function.
         Board currBoard = this.getBoard();
+        currBoard.setViewingPerspective(side);
         for(int i = 0; i < currBoard.size(); i++) {
             tiltColumn(i);
         }
+        currBoard.setViewingPerspective(Side.NORTH);
     }
 
     /** Tilts every column of the board toward SIDE.
