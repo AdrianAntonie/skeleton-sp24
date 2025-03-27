@@ -164,7 +164,10 @@ public class Model {
             if (currBoard.tile(x, (i + 1)) == null) {
                 targetY++;
             }
-            else if ((currBoard.tile(x, (i + 1)).value() == currTile.value()) && (currBoard.tile(x, (i + 1)).value() != currBoard.tile(x, (i + 2)).value()) && !currBoard.tile(x, (i + 1)).wasMerged()) {
+            else if ((currBoard.tile(x, (i + 1)).value() == currTile.value()) && (i + 2 < currBoard.size()) && (currBoard.tile(x, (i + 1)).value() != currBoard.tile(x, (i + 2)).value()) && !currBoard.tile(x, (i + 1)).wasMerged()) {
+                targetY++;
+            }
+            else if((i + 2 == currBoard.size()) && (currBoard.tile(x, (i + 1)).value() == currTile.value())){
                 targetY++;
             }
         }
@@ -178,6 +181,12 @@ public class Model {
      * */
     public void tiltColumn(int x) {
         // TODO: Task 7. Fill in this function.
+        Board currBoard = this.getBoard();
+        for(int i = currBoard.size() - 1; i >= 0; i--) {
+            if(currBoard.tile(x, i) != null) {
+                moveTileUpAsFarAsPossible(x, i);
+            }
+        }
     }
 
     public void tilt(Side side) {
