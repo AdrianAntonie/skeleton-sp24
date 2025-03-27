@@ -85,6 +85,14 @@ public class Model {
      * */
     public boolean emptySpaceExists() {
         // TODO: Task 2. Fill in this function.
+        Board CurrentBoard = this.getBoard();
+        for (int i = 0; i < CurrentBoard.size(); i++) {
+            for (int j = 0; j < CurrentBoard.size(); j++) {
+                if (tile(i, j) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -95,6 +103,14 @@ public class Model {
      */
     public boolean maxTileExists() {
         // TODO: Task 3. Fill in this function.
+        Board CurrentBoard = this.getBoard();
+        for (int i = 0; i < CurrentBoard.size(); i++) {
+            for (int j = 0; j < CurrentBoard.size(); j++) {
+                if (tile(i, j) != null && tile(i, j).value() == this.MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -106,6 +122,19 @@ public class Model {
      */
     public boolean atLeastOneMoveExists() {
         // TODO: Fill in this function.
+        Board CurrentBoard = this.getBoard();
+        int board_size = CurrentBoard.size();
+        if (this.emptySpaceExists()) {
+            return true;
+        }
+        for (int i = 0; i < board_size; i++) {
+            for(int j = 0; j < board_size; j++) {
+                if((i != 0 && tile((i - 1), j).value() == tile(i, j).value()) || (j != 0 && tile(i, (j - 1)).value() == tile(i, j).value()) || (i != board_size - 1 && tile((i + 1), j).value() == tile(i, j).value()) || (j != board_size - 1 && tile(i, (j + 1)).value() == tile(i, j).value())) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -129,6 +158,17 @@ public class Model {
         int targetY = y;
 
         // TODO: Tasks 5, 6, and 10. Fill in this function.
+        Board currBoard = this.getBoard();
+
+        for (int i = y; i < currBoard.size() - 1; i++) {
+            if (currBoard.tile(x, (i + 1)) == null) {
+                targetY++;
+            }
+            else if ((currBoard.tile(x, (i + 1)).value() == currTile.value()) && (currBoard.tile(x, (i + 1)).value() != currBoard.tile(x, (i + 2)).value()) && !currBoard.tile(x, (i + 1)).wasMerged()) {
+                targetY++;
+            }
+        }
+        board.move(x, targetY, currTile);
     }
 
     /** Handles the movements of the tilt in column x of the board
