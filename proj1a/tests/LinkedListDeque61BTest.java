@@ -57,4 +57,63 @@ public class LinkedListDeque61BTest {
      }
 
     // Below, you'll write your own tests for LinkedListDeque61B.
+    @Test
+    /** This tests the method isEmpty() */
+    public void isEmptyTest() {
+        Deque61B<Integer> testList = new LinkedListDeque61B<>();
+        assertThat(testList.isEmpty()).isEqualTo(true);
+        testList.addFirst(1);
+        assertThat(testList.isEmpty()).isEqualTo(false);
+    }
+
+    @Test
+    /** This tests the method size() */
+    public void sizeTest() {
+        Deque61B<Integer> testList = new LinkedListDeque61B<>();
+        int actual = testList.size();
+        int expected = 0;
+        assertThat(actual).isEqualTo(expected);
+        testList.addFirst(99);
+        testList.addLast(-90);
+        testList.addFirst(0);
+        actual = testList.size();
+        expected = 3;
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    /** This tests the method get() */
+    public void getTest() {
+        Deque61B<Integer> testDeque = new LinkedListDeque61B<>();
+        assertThat(testDeque.get(0)).isNull();
+        assertThat(testDeque.get(1)).isNull();
+        assertThat(testDeque.get(-1)).isNull();
+        testDeque.addLast(5);
+        assertThat(testDeque.get(0)).isEqualTo(5);
+        assertThat(testDeque.get(1)).isNull();
+        assertThat(testDeque.get(-2)).isNull();
+        testDeque.addLast(5);
+        assertThat(testDeque.get(1)).isEqualTo(5);
+        testDeque.addLast(10);
+        assertThat(testDeque.get(2)).isEqualTo(10);
+        assertThat(testDeque.get(1)).isEqualTo(5);
+    }
+
+    @Test
+    /** This test the method getRecursive() */
+    public void getRecursiveTest() {
+        Deque61B<Integer> testDeque = new LinkedListDeque61B<>();
+        assertThat(testDeque.getRecursive(0)).isNull();
+        assertThat(testDeque.getRecursive(1)).isNull();
+        assertThat(testDeque.getRecursive(-1)).isNull();
+        testDeque.addLast(5);
+        assertThat(testDeque.getRecursive(0)).isEqualTo(5);
+        assertThat(testDeque.getRecursive(1)).isNull();
+        assertThat(testDeque.getRecursive(-2)).isNull();
+        testDeque.addLast(5);
+        assertThat(testDeque.getRecursive(1)).isEqualTo(5);
+        testDeque.addLast(10);
+        assertThat(testDeque.getRecursive(2)).isEqualTo(10);
+        assertThat(testDeque.getRecursive(1)).isEqualTo(5);
+    }
 }
