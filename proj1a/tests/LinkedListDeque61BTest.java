@@ -116,4 +116,35 @@ public class LinkedListDeque61BTest {
         assertThat(testDeque.getRecursive(2)).isEqualTo(10);
         assertThat(testDeque.getRecursive(1)).isEqualTo(5);
     }
+
+    @Test
+    /** This tests the methods removeFirst() && removeLast() */
+    public void removeFirstAndLastTest() {
+        Deque61B<Integer> testDeque = new LinkedListDeque61B<>();
+        assertThat(testDeque.removeFirst()).isNull();
+        testDeque.addLast(5);
+        testDeque.addLast(7);
+        testDeque.addLast(8);
+        testDeque.addLast(9);
+        testDeque.addFirst(0);
+        testDeque.addFirst(3);
+        testDeque.addFirst(2);
+        testDeque.removeFirst();
+        assertThat(testDeque.toList()).containsExactly(3, 0, 5, 7, 8, 9);
+        testDeque.removeLast();
+        assertThat(testDeque.toList()).containsExactly(3, 0, 5, 7, 8);
+        assertThat(testDeque.removeFirst()).isEqualTo(3);
+        testDeque.removeFirst();
+        testDeque.removeLast();
+        assertThat(testDeque.toList()).containsExactly(5, 7);
+        assertThat(testDeque.removeLast()).isEqualTo(7);
+        testDeque.removeLast();
+        assertThat(testDeque.removeLast()).isNull();
+        testDeque.addLast(5);
+        testDeque.removeLast();
+        assertThat(testDeque.toList()).containsExactly();
+        testDeque.addLast(5);
+        testDeque.removeFirst();
+        assertThat(testDeque.toList()).containsExactly();
+    }
 }

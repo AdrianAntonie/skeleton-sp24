@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class LinkedListDeque61B<T> implements Deque61B<T>{
     private Node sentinel = new Node();
     private int size = 0;
+    private Node recursivePtr = sentinel;
+    private Node recursivePtr1;
     public LinkedListDeque61B() {
 
     }
@@ -75,12 +77,38 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
 
     @Override
     public T removeFirst() {
-        return null;
+        T removedData;
+        if(size == 0) {
+            return null;
+        }
+        removedData = sentinel.next.data;
+        if(size >= 2) {
+            sentinel.next.next.prev = sentinel;
+            sentinel.next = sentinel.next.next;
+        } else {
+            sentinel.next = sentinel;
+            sentinel.prev = sentinel;
+        }
+        size--;
+        return removedData;
     }
 
     @Override
     public T removeLast() {
-        return null;
+        T removedData;
+        if(size == 0) {
+            return null;
+        }
+        removedData = sentinel.prev.data;
+        if(size >= 2){
+            sentinel.prev.prev.next = sentinel;
+            sentinel.prev = sentinel.prev.prev;
+        } else {
+            sentinel.next = sentinel;
+            sentinel.prev = sentinel;
+        }
+        size--;
+        return removedData;
     }
 
     @Override
@@ -102,10 +130,11 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
             return null;
         }
         if(index == 0) {
-            return sentinel.next.data;
+            recursivePtr1 = recursivePtr;
+            recursivePtr = sentinel;
+            return recursivePtr1.next.data;
         }
-        pointer = pointer.next;
-        getRecursive(index - 1);
-        return null;
+        recursivePtr = recursivePtr.next;
+        return getRecursive(index - 1);
     }
 }
