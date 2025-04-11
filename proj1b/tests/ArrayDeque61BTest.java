@@ -20,4 +20,31 @@ public class ArrayDeque61BTest {
 //         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
 //     }
 
+    @Test
+    /** This tests the addFirst and addLast and toList methods */
+    public void testAddFirstAndLastAndToList() {
+        ArrayDeque61B<Integer> testArrayDeque = new ArrayDeque61B<>();
+        testArrayDeque.addFirst(1);
+        testArrayDeque.addFirst(2);
+        testArrayDeque.addLast(5);
+        testArrayDeque.addFirst(3);
+        testArrayDeque.addFirst(4);
+        testArrayDeque.addLast(5);
+        testArrayDeque.addFirst(5);
+        testArrayDeque.addLast(7);
+        testArrayDeque.addFirst(6);
+        testArrayDeque.addFirst(7);
+        testArrayDeque.addLast(5);
+        testArrayDeque.addFirst(8);
+        testArrayDeque.addFirst(9);
+        testArrayDeque.addFirst(10);
+        testArrayDeque.addFirst(11);
+        testArrayDeque.addFirst(12);
+        testArrayDeque.addLast(5);
+        testArrayDeque.addLast(10);
+        testArrayDeque.addLast(12);
+        testArrayDeque.addFirst(13);
+        assertThat(testArrayDeque.toList()).containsExactly(13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 , 1, 5, 5, 7, 5, 5, 10, 12);
+    }
+
 }
