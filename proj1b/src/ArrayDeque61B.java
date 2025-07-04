@@ -4,77 +4,115 @@ import java.util.List;
 
 //in addlast addfirst if size = maxSize then resize move and call addfirst or addlast again on it after modifying maxsize else size++ and addfirst addlast accordingly
 public class ArrayDeque61B<T> implements Deque61B<T> {
-
-    private int size = 0;
     private int maxSize = 8;
-    private int firstElementNextIndex = 7;
-    private int lastElementNextIndex = 0;
-    public T[] arrayDeque =(T[]) new Object[8];
+    private T[] arrayDeque = (T[]) new Object[maxSize];
+    private int front = -1;
+    private int frontPillar = -1;
+    private int back = maxSize / 2 - 1;
+    private int backPillar = back;
+    private int size = 0;
+    private int helper = 0;
 
-    public ArrayDeque61B() {
-
-    }
+    public ArrayDeque61B() {}
 
     private void resize() {
-        maxSize *= 2;
-        T[] resizedArrayDeque = (T[]) new Object[maxSize];
-        int k = maxSize - 1;
-        for(int i = size - 1; i > firstElementNextIndex; i--) {
-            resizedArrayDeque[k--] = arrayDeque[i];
-        }
-        firstElementNextIndex = k;
-        for(int i = 0; i < lastElementNextIndex; i++) {
-            resizedArrayDeque[i] = arrayDeque[i];
-        }
-        arrayDeque = resizedArrayDeque;
+
     }
 
     @Override
     public void addFirst(T x) {
-        if(size != maxSize) {
-            size++;
-            arrayDeque[firstElementNextIndex] = x;
-            firstElementNextIndex--;
-        } else {
+        size++;
+        if(size == maxSize) {
             resize();
-            addFirst(x);
         }
+        if(front < back) {
+            front++;
+            if(front == backPillar + 1) {
+                front = maxSize;
+            }
+        }
+        if(front > back) {
+            front--;
+        }
+        arrayDeque[front] = x;
     }
 
     @Override
     public void addLast(T x) {
-        if(size != maxSize) {
-            size++;
-            arrayDeque[lastElementNextIndex] = x;
-            lastElementNextIndex++;
-        } else {
+        size++;
+        if(size == maxSize + 1) {
             resize();
-            addLast(x);
         }
+        if(back >= backPillar && helper == 0) {
+            back++;
+            if(back == maxSize) {
+                back = backPillar;
+            }
+        }
+        if(back <= backPillar) {
+            back--;
+            if(helper == 0) {
+                back++;
+                helper = 1;
+            }
+        }
+        arrayDeque[back] = x;
     }
 
     @Override
     public List<T> toList() {
-        if(isEmpty()){
-            return List.of();
+        List<T> arrayList = new ArrayList<>();
+        int i = front;
+        //Need new condition
+        if(front < back && back >= backPillar) {
+            while(i > frontPillar && arrayDeque[i] != null) {
+                arrayList.add(arrayDeque[i]);
+                i--;
+            }
+            i = backPillar;
+            while(i < back) {
+                i++;
+                arrayList.add(arrayDeque[i]);
+            }
         }
-        ArrayList<T> dequeList = new ArrayList<>(size);
-        int k = 0;
-        for(int i = firstElementNextIndex + 1; i < maxSize; i++) {
-            dequeList.add(k++, arrayDeque[i]);
+        else {
+            i = frontPillar + 1;
+            while(i != back && i != backPillar + 1) {
+                arrayList.add(arrayDeque[i]);
+                i++;
+            }
+            if(i == back) {
+                i = backPillar;
+                while(i < maxSize - 1) {
+                    i++;
+                    arrayList.add(arrayDeque[i]);
+                }
+                i = backPillar;
+                while(arrayDeque[i] != null && i >= back) {
+                    arrayList.add(arrayDeque[i]);
+                    i--;
+                }
+            }
+            else {
+                i = maxSize - 1;
+                while(arrayDeque[i] != null && i > back) {
+                    arrayList.add(arrayDeque[i]);
+                    i--;
+                }
+                i = backPillar + 1;
+                while(arrayDeque[i] != null && i <= back) {
+                    arrayList.add(arrayDeque[i]);
+                    i++;
+                }
+            }
         }
-        for(int i = 0; i < lastElementNextIndex; i++) {
-            dequeList.add(k++, arrayDeque[i]);
-        }
-        return dequeList;
+
+        return arrayList;
     }
 
     @Override
     public boolean isEmpty() {
-        if(size == 0){
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -84,7 +122,24 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T removeFirst() {
-        return null;
+        if(size == 0) {
+            return null;
+        }
+        size--;
+
+        T element = null;
+
+        if(front != frontPillar) {
+            element = arrayDeque[front];
+            arrayDeque[front] = null;
+            front--;
+        }
+        else {
+            backPillar++;
+            element = arrayDeque[backPillar];
+            arrayDeque[backPillar] = null;
+        }
+        return element;
     }
 
     @Override
