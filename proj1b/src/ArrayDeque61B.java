@@ -77,7 +77,10 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        if(index >= size) {
+            return null;
+        }
+        return arrayDeque[(front + index) % maxSize];
     }
 
     @Override

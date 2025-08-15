@@ -37,6 +37,7 @@ public class ArrayDeque61BTest {
         testArrayDeque0.addLast(6);
         testArrayDeque0.addLast(7);
         assertThat((testArrayDeque0.toList())).containsExactly(3, 2, 1, 0, 4, 5, 6, 7);
+        assertThat(testArrayDeque0.get(5)).isEqualTo(5);
     }
 
     @Test
