@@ -55,7 +55,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
     private class LinkedListIterator implements Iterator<T> {
         Node position = sentinel.next;
         public boolean hasNext() {
-            return position.next != sentinel;
+            return position != sentinel;
         }
         public T next() {
             Node returnNode = position;

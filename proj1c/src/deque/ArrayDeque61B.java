@@ -25,7 +25,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             return index < size;
         }
         public T next() {
-            T returnItem = arrayDeque[index];
+            T returnItem = get(index);
             index++;
             return returnItem;
         }
