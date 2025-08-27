@@ -16,9 +16,8 @@ import static ngrams.TimeSeries.MIN_YEAR;
  * @author Josh Hug
  */
 public class NGramMap {
-
     // TODO: Add any necessary static/instance variables.
-
+    
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */

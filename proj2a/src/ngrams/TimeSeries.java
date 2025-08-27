@@ -1,7 +1,6 @@
 package ngrams;
 
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * An object for mapping a year number (e.g. 1996) to numerical data. Provides
@@ -31,6 +30,12 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         // TODO: Fill in this constructor.
+        this.putAll(ts.subMap(startYear, true, endYear, true));
+    }
+
+    public TimeSeries(TimeSeries ts) {
+        super();
+        this.putAll(ts);
     }
 
     /**
@@ -38,7 +43,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Integer> years() {
         // TODO: Fill in this method.
-        return null;
+        return new ArrayList<>(keySet());
     }
 
     /**
@@ -47,7 +52,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Double> data() {
         // TODO: Fill in this method.
-        return null;
+        return new ArrayList<>(values());
     }
 
     /**
@@ -61,7 +66,12 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries sumTS = new TimeSeries(this);
+        for(Map.Entry<Integer, Double> entry : ts.entrySet()) {
+            sumTS.merge(entry.getKey(), entry.getValue(), Double::sum);
+        }
+
+        return sumTS;
     }
 
     /**
@@ -75,7 +85,15 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries newTS = new TimeSeries(this);
+        for(Map.Entry<Integer, Double> entry: newTS.entrySet()) {
+            if(!ts.containsKey(entry.getKey())) {
+                throw new IllegalArgumentException();
+            } else {
+                newTS.put(entry.getKey(), Math.floor(ts.get(entry.getKey()) / entry.getValue()));
+            }
+        }
+        return newTS;
     }
 
     // TODO: Add any private helper methods.
