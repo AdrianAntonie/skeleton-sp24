@@ -1,5 +1,6 @@
 package main;
 
+import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 
 
@@ -8,7 +9,7 @@ public class AutograderBuddy {
     public static NgordnetQueryHandler getHyponymsHandler(
             String wordFile, String countFile,
             String synsetFile, String hyponymFile) {
-
-        throw new RuntimeException("Please fill out AutograderBuddy.java!");
+        //throw new RuntimeException("Please fill out AutograderBuddy.java!");
+        return null;
     }
 }
