@@ -233,6 +233,7 @@ public class GameOfLife {
      * @return
      */
     public TETile[][] nextGeneration(TETile[][] tiles) {
+        currentState = tiles;
         TETile[][] nextGen = new TETile[width][height];
         // The board is filled with Tileset.NOTHING
         fillWithNothing(nextGen);
@@ -241,11 +242,30 @@ public class GameOfLife {
         // TODO: The current state is represented by TETiles[][] tiles and the next
         // TODO: state/evolution should be returned in TETile[][] nextGen.
 
+        TETile[] neighbours;
+        int count;
 
-
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                neighbours = getNeighbours(i, j);
+                count = 0;
+                for (TETile neighbour : neighbours) {
+                    if (neighbour == null) {
+                        break;
+                    }
+                    if (neighbour == Tileset.CELL) {
+                        count++;
+                    }
+                }
+                if ((tiles[i][j] == Tileset.CELL && (count == 2 || count == 3)) || (tiles[i][j] == Tileset.NOTHING && count == 3)) {
+                    nextGen[i][j] = Tileset.CELL;
+                }
+            }
+        }
 
         // TODO: Returns the next evolution in TETile[][] nextGen.
-        return null;
+        //currentState = nextGen;
+        return nextGen;
     }
 
     /**
@@ -326,5 +346,30 @@ public class GameOfLife {
             GameOfLife g = new GameOfLife(seed);
             g.runGame();
         }
+    }
+
+
+    /**
+     * Returns all the valid neighbours.
+     *
+     * @param x The x coordinate of the tile.
+     * @param y The y coordinate of the tile.
+     * @return An array of up to 8 neighbouring TETile objects
+     */
+    private TETile[] getNeighbours(int x, int y) {
+        // Offsets that you can add to your coordinates to get all possible neighbours
+        final int[][] offset = {{-1, 1}, {0, 1}, {1, 1}, {-1, 0}, {1, 0}, {-1, -1}, {0, -1}, {1, -1}};
+        TETile[] neighbours = new TETile[8];
+        int i = 0;
+
+        for (int[] a : offset) {
+            int newX = x + a[0];
+            int newY = y + a[1];
+            if(newX >= 0 && newX < width && newY >= 0 && newY < height) {
+                neighbours[i++] = currentState[newX][newY];
+            }
+        }
+
+        return neighbours;
     }
 }
