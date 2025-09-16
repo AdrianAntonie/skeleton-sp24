@@ -289,17 +289,29 @@ public class GameOfLife {
         // TODO: Save the dimensions of the board into the first line of the file.
         // TODO: The width and height should be separated by a space, and end with "\n".
 
+        StringBuilder saveStringBuilder = new StringBuilder();
+        saveStringBuilder.append(width);
+        saveStringBuilder.append(" ");
+        saveStringBuilder.append(height);
+        saveStringBuilder.append('\n');
 
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                if(currentState[j][height - 1 - i] == Tileset.NOTHING) {
+                    saveStringBuilder.append(0);
+                } else {
+                    saveStringBuilder.append(1);
+                }
+            }
+            saveStringBuilder.append('\n');
+        }
 
         // TODO: Save the current state of the board into save.txt. You should
         // TODO: use the provided FileUtils functions to help you. Make sure
         // TODO: the orientation is correct! Each line in the board should
         // TODO: end with a new line character.
 
-
-
-
-
+        FileUtils.writeFile("./src/save.txt", saveStringBuilder.toString());
     }
 
     /**
