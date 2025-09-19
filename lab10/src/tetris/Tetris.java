@@ -15,12 +15,12 @@ import java.util.*;
 
 public class Tetris {
     //10, 20, 25
-    private static int WIDTH = 15;
+    private static int WIDTH = 20;
     private static int HEIGHT = 30;
 
     // Tetrominoes spawn above the area we display, so we'll have our Tetris board have a
     // greater height than what is displayed.
-    private static int GAME_HEIGHT = 40;
+    private static int GAME_HEIGHT = 35;
 
     // Contains the tiles for the board.
     private TETile[][] board;
